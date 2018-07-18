@@ -39,12 +39,16 @@ Route::group(['prefix' => 'user'], function() {
 		'as'   => 'login'
 	]);
 
-	Route::post('register',[
+	Route::group(['middleware' => 'auth:api'], function() {
+	    
+		Route::post('register',[
 
-		'uses' => 'Apis\UserRegisterApiController@register',
-		'as'   => 'register'
+			'uses' => 'Apis\RegisterController@register',
+			'as'   => 'register'
 
-	]);
+		]);
+	});
+
 
 	Route::get('map-users',[
 
