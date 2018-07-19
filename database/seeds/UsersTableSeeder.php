@@ -78,6 +78,7 @@ class UsersTableSeeder extends Seeder
             'detailer_id'               => $detailer1->id,
             'remaining_subscriptions'   => 0,
             'detailer_subscriptions'    => 200,
+            'use_subscription'          => 0,
             'created_at'     => \Carbon\Carbon::now(),
             'updated_at'     => \Carbon\Carbon::now(),
         ]);
@@ -87,6 +88,7 @@ class UsersTableSeeder extends Seeder
             'detailer_id'               => $detailer2->id,
             'remaining_subscriptions'   => 0,
             'detailer_subscriptions'    => 100,
+            'use_subscription'          => 0,
             'created_at'     => \Carbon\Carbon::now(),
             'updated_at'     => \Carbon\Carbon::now(),
         ]);
@@ -95,6 +97,7 @@ class UsersTableSeeder extends Seeder
 
             'detailer_id'               => $detailer3->id,
             'remaining_subscriptions'   => 0,
+            'use_subscription'          => 0,
             'detailer_subscriptions'    => 300,
             'created_at'     => \Carbon\Carbon::now(),
             'updated_at'     => \Carbon\Carbon::now(),

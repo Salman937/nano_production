@@ -18,6 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('detailer_id');
             $table->integer('remaining_subscriptions');
             $table->integer('detailer_subscriptions');
+            $table->integer('use_subscription');
             $table->timestamps();
         });
     }

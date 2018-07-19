@@ -47,6 +47,19 @@ Route::group(['prefix' => 'user'], function() {
 			'as'   => 'register'
 
 		]);
+
+		Route::post('applications-done',[
+
+			'uses' => 'Apis\ApplicationDoneController@applicants',
+			'as'   => 'applications-done'
+		]);
+
+		Route::post('user-details',[
+
+			'uses' => 'Apis\UsersController@user_details',
+			'as'   => 'user-details'
+
+		]);
 	});
 
 
