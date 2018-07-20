@@ -18,7 +18,6 @@ class ApplicationDoneController extends Controller
     	if (! $user) 
     	{
     		return response()->json([
-
     			'status'    => false,
     			'code'      => 401,
     			'api_token' => "User is not Registered"
