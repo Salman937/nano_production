@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Apis;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+
 class ProductsController extends Controller
 {
     public function index()
     {
+        header('Content-Type: application/json; charset=utf-8');
+        
     	$products = DB::table('products')->get();
 
     	return response()->json([
@@ -21,6 +24,8 @@ class ProductsController extends Controller
     }
     public function product($id)
     {
+        header('Content-Type: application/json; charset=utf-8');
+        
     	$product = DB::table('products')->find($id);
 
     	return response()->json([

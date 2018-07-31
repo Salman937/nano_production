@@ -10,6 +10,8 @@ class PersonalZoneController extends Controller
 {
     public function index()
     {
+        header('Content-Type: application/json; charset=utf-8');
+        
     	$products = DB::table('products')->orderBy('id','desc')->first();
 
     	$gallery = DB::table('gallery')->orderBy('id','desc')->limit(3)->get();
@@ -22,7 +24,7 @@ class PersonalZoneController extends Controller
         {
             $created = \Carbon\Carbon::parse($news->created_at)->diffForHumans(null,true);
 
-            $time = str_replace(['hours', 'minutes'], ['h', 'mins'], $created );
+            $time = str_replace(['hours', 'minutes','week'], ['h', 'mins','w'], $created );
 
             $feed[] = [
                         "id"        => $news->id,

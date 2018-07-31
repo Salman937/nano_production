@@ -33,8 +33,10 @@ class LoginController extends Controller
 	    		]);
 	    	} 
 
-	    	$check_user = User::where('warranty_code',$request->warranty_code)
-	    	                  ->where('phone_number', $request->phone_number)->first();
+	    	$check_user = User::select('id','name','email','warranty_code','phone_number','api_token','user_type')
+	    			   -> where('warranty_code',$request->warranty_code)
+	    	                  ->where('phone_number', $request->phone_number)
+	    	                  ->first();
 
 	    	// dd($check_user->toArray());                  
 
@@ -92,11 +94,22 @@ class LoginController extends Controller
 
 	    		$user->save();
 
+	    		$user_data = [
+				        "id"			=> $user->id,
+				        "name"			=> $user->name,
+				        "email"			=> $user->email,
+				        "phone_number"	=> $user->phone_number,
+				        "api_token"		=> $user->api_token,
+				        "user_type"		=> $user->user_type,
+				        "latitude"		=> $user->latitude,
+				        "longitude"		=> $user->longitude,						    
+				    ];
+
 	    		return response()->json([
 	    			'success'   => 'true',
 	    			'status'    => '200',
 	    			'message'   => 'User LoggedIn Successfully',
-	    			'user_data' => $user
+	    			'user_data' => $user_data
 	    		]);
 
 	    	}	

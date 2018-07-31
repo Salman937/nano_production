@@ -12,6 +12,8 @@ class UsersController extends Controller
 {
     public function map_users()
     {
+        header('Content-Type: application/json; charset=utf-8');
+
     	$detailers = User::where('user_type','detailer')->get();
 
     	return response()->json([
@@ -24,6 +26,8 @@ class UsersController extends Controller
     }
     public function get_user_in_map($id)
     {
+        header('Content-Type: application/json; charset=utf-8');
+            
     	$map_user = User::find($id);
 
     	return response()->json([
