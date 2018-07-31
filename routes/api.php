@@ -20,6 +20,12 @@ Route::get('personal-zone',[
 
 ]);
 
+Route::post('search',[
+
+	'uses' => 'Apis\SearchController@index',
+	'as'   => 'search'
+]);
+
 Route::get('products',[
 
 	'uses' => 'Apis\ProductsController@index',
