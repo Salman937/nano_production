@@ -11,6 +11,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        App\User::create([
+
+            'name'          => 'Admin',
+            'email'         => 'admin@admin.com',
+            'phone_number'  => '00000000000',
+            'api_token'     => str_random(60),
+            'user_type'     => 'admin',
+            'latitude'      => 78.99,
+            'longitude'     => 78.96,
+            'password'      => bcrypt('admin'),
+        ]);
+
         $detailer1 = App\User::create([
 
         	'name'          => 'Salman Iqbal',
