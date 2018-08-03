@@ -53,33 +53,41 @@ class UsersController extends Controller
             ]);
         } 
 
-        $user_details = DB::table('users')
+        $customer_details = DB::table('users')
                             ->join('car_details','car_details.customer_id', '=', 'users.id')
-                            ->join('users AS user','user.id', '=', 'car_details.detailer_id')
                             ->where('car_details.customer_id', $request->customer_id)
                             ->orderBy('car_details.id','desc')->limit(1)->first();
 
-        dd($user_details);                    
 
+        $detailer_details = DB::table('car_details')
+                            ->join('users','car_details.detailer_id', '=', 'users.id')
+                            ->where('car_details.customer_id', $request->customer_id)
+                            ->orderBy('car_details.id','desc')->limit(1)->first();
 
         $user = [
-                    "id"                => $user_details->id,
-                    "name"              => $user_details->name,
-                    "email"             => $user_details->email,
-                    "warranty_code"     => $user_details->warranty_code,
-                    "phone_number"      => $user_details->phone_number,
-                    "user_type"         => $user_details->user_type,
-                    "customer_id"       => $user_details->customer_id,
-                    "detailer_id"       => $user_details->detailer_id,
-                    "done_date"         => date('m-d-Y',strtotime($user_details->done_date)),
-                    "license_plate_no"  => $user_details->license_plate_no,
-                    "model"             => $user_details->model,
-                    "year"              => $user_details->year,
-                    "color"             => $user_details->color,
-                    "title"             => $user_details->title,
-                    "edition"           => $user_details->edition,
+                    "id"                => $customer_details->id,
+                    "name"              => $customer_details->name,
+                    "email"             => $customer_details->email,
+                    "warranty_code"     => $customer_details->warranty_code,
+                    "phone_number"      => $customer_details->phone_number,
+                    "user_type"         => $customer_details->user_type,
+                    "customer_id"       => $customer_details->customer_id,
+                    "detailer_id"       => $customer_details->detailer_id,
+                    "done_date"         => date('m-d-Y',strtotime($customer_details->done_date)),
+                    "license_plate_no"  => $customer_details->license_plate_no,
+                    "model"             => $customer_details->model,
+                    "year"              => $customer_details->year,
+                    "color"             => $customer_details->color,
+                    "title"             => $customer_details->title,
+                    "edition"           => $customer_details->edition,
+
+                    'detailer_name'     => $detailer_details->name,
+                    "detailer_email"    => $detailer_details->email,
+                    "detailer_phn_nmbr" => $detailer_details->phone_number,
+                    "detailer_img"      => $detailer_details->image,
                 ];   
 
+                        
           return response()->json([
 
                 'success' => 'true',

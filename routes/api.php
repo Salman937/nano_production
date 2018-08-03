@@ -24,6 +24,13 @@ Route::post('search',[
 
 	'uses' => 'Apis\SearchController@index',
 	'as'   => 'search'
+
+]);
+
+Route::post('search',[
+
+	'uses' => 'Apis\SearchController@index',
+	'as'   => 'search'
 ]);
 
 Route::get('products',[

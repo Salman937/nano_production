@@ -47,7 +47,7 @@ class ApplicationDoneController extends Controller
 							    "detailer_id"	 => $app_done->detailer_id,
 							    "done_date"		 => date('m-d-Y',strtotime($app_done->done_date)),
 							    "license_plate_no" => $app_done->license_plate_no,
-							    "model"			 => $app_done->license_plate_no,
+							    "model"			 => $app_done->model,
 							    "year"			 => $app_done->year,
 							    "color"		     => $app_done->color,
 							    "title"			 => $app_done->title,
