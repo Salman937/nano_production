@@ -60,8 +60,8 @@ class ApplicationDoneController extends Controller
     		'success'  => 'true',
     		'status'   => 200,
     		'message'  => 'Total subscriptions, remaining subscription and applications done by detailer',
-    		'subscriptions' => $remaining_subscription,
-    		'applications_done' => $applicants
+    		'subscriptions' => $remaining_subscription == null ? "No Subscriptions" : $remaining_subscription,
+    		'applications_done' => empty($applicants) ? "No Records Found" : $applicants 
     	]);
     }													
 }

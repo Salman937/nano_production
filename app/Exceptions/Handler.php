@@ -7,6 +7,7 @@ use Request;
 use Illuminate\Auth\AuthenticationException;
 use Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -64,9 +65,10 @@ class Handler extends ExceptionHandler
         // if ($request->expectsJson()) {
         //     return response()->json(['error' => 'Unauthenticated.'], 401);
         // }
-
-        return response()->json([
-                'success' => false,
+        if ($request->expectsJson()) {
+            \Log::warning('Unauthorized access, api_token mis match for ' . $request->api_token);
+            return response()->json([
+                'success' => true,
                 'response_code' => 401,
                 'message' => "Unauthorized token",
                 'errors' => [
@@ -75,5 +77,19 @@ class Handler extends ExceptionHandler
                     ]
                 ]
             ], 401);
+        }
+
+        return redirect()->guest(route('login'));
+
+        // return response()->json([
+        //         'success' => false,
+        //         'response_code' => 401,
+        //         'message' => "Unauthorized token",
+        //         'errors' => [
+        //             'api_token' => [
+        //                 "Either the API token is missing or is invalid. please try again with a valid api token"
+        //             ]
+        //         ]
+        //     ], 401);
     }
 }

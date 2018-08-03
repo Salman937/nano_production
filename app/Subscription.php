@@ -11,7 +11,7 @@ class Subscription extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'detailer_id', 'remaining_subscriptions', 'detailer_subscriptions','use_subscription' ];
+    protected $fillable = [ 'detailer_id', 'remaining_subscriptions', 'detailer_subscriptions' ];
 
     /**
      * The attributes that should be hidden for arrays.

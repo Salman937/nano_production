@@ -27,4 +27,16 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'Admin\DetailersController@index',
 		'as'   => 'detailers'
 	]);
+
+	Route::post('create',[
+
+		'uses' => 'Admin\DetailersController@create',
+		'as'   => 'create'
+	]);
+
+	Route::get('/detailer/delete/{id}',[
+
+		'uses' => 'Admin\DetailersController@destroy',
+		'as'   => 'detailer.delete'
+	]);
 });
