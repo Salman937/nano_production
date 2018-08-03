@@ -82,17 +82,12 @@
     <script src="{{ asset('js/justgage/justgage.js') }}"></script>
     <script src="{{ asset('js/justgage/raphael.2.1.0.min.js') }}"></script>
 
-    <!-- Flot Charts -->
-    <script src="{{ asset('js/flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.orderBar.min.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.stack.min.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.pie.min.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.tooltip.min.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.resize.min.js') }}"></script>
 
     <!-- Custom JS -->
     <script src="{{ asset('js/menu.js') }}"></script>
-    <script src="{{ asset('js/custom-index2.js') }}"></script>
+    <!-- <script src="{{ asset('js/custom-index2.js') }}"></script> -->
+    
+    <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
     
     <script type="text/javascript">
       //ScrollUp
@@ -106,6 +101,13 @@
           animationOutSpeed: 400, // Animation out speed (ms)
           scrollText: 'Top', // Text for element
           activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        });
+      });
+
+      //Data Tables
+      $(document).ready(function () {
+        $('#data-table').dataTable({
+          "sPaginationType": "full_numbers"
         });
       });
     </script>

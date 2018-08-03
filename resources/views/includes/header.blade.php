@@ -2,15 +2,15 @@
   <div id='cssmenu'>
     <ul>
       <li class='active'>
-        <a href='#'>
+        <a href='/'>
           <i class="fa fa-home"></i>
           Home
         </a>
       </li>
       <li>
-        <a href="forms.html">
+        <a href="{{ route('detailers') }}">
           <i class="fa fa-users"></i>
-          Users
+          Detailers
         </a>
       </li>
       <li class=''>

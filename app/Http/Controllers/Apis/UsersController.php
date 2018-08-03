@@ -55,8 +55,11 @@ class UsersController extends Controller
 
         $user_details = DB::table('users')
                             ->join('car_details','car_details.customer_id', '=', 'users.id')
+                            ->join('users AS user','user.id', '=', 'car_details.detailer_id')
                             ->where('car_details.customer_id', $request->customer_id)
                             ->orderBy('car_details.id','desc')->limit(1)->first();
+
+        dd($user_details);                    
 
 
         $user = [
