@@ -36,6 +36,7 @@ class HomeController extends Controller
                                   ->with('customers', $customers)
                                   ->with('subscription', $subscription)
                                   ->with('products', $products)
-                                  ->with('news_feed', $news_feed);
+                                  ->with('news_feed', $news_feed)
+                                  ->with('heading','home');
     }
 }

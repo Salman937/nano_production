@@ -18,7 +18,7 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="index2.html" class="">Detailers</a>
+              <a href="index2.html" class="">Products</a>
             </li>
           </ul>
         </div>
@@ -61,7 +61,7 @@
                 <div class="widget">
                   <div class="widget-header">
                     <div class="title">
-                      <i class="fa fa-users"> </i> Detailers
+                      <i class="fa fa-gift"></i> Products
                     </div>
                   </div>
                   <div class="widget-body">
@@ -69,73 +69,75 @@
                       <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">
 
                         <a href="" title="add new detailer" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                          <i class="fa fa-plus-circle"></i> Add New Detailer
+                          <i class="fa fa-plus-circle"></i> Add New Product 
                         </a>
 
                         <thead>
                           <tr>
                             <th style="width:17%">
-                              Name
+                              Title
                             <th style="width:20%">
-                              Email
-                            </th>
-                            <th style="width:16%">
-                              Phone Number
-                            </th>
-                            <th style="width:16%">
-                              Image
-                            </th>
-                            <th style="width:16%">
-                              Remaining Subscriptions
-                            </th>
-                            <th style="width:16%">
-                              Total Subscriptions
+                              Edition
                             </th>
                             <th style="width:16%" class="hidden-phone">
-                              created_at
+                              Features
+                            </th>
+                            <th style="width:16%" class="hidden-phone">
+                              Image
+                            </th>
+                            <th style="width:16%" class="hidden-phone">
+                              Technical Data
+                            </th>
+                            <th style="width:16%" class="hidden-phone">
+                              Information
+                            </th>
+                            <th style="width:16%" class="hidden-phone">
+                              Use
+                            </th>
+                            <th style="width:16%" class="hidden-phone">
+                              Safety
                             </th>
                             <th style="width:16%">
-                              Actions
+                              edit
+                            </th>
+                            <th style="width:16%">
+                              Delete
                             </th>
                           </tr>
                         </thead>
                         <tbody>
 
-                        @foreach($detailers as $detailer)  
+                        @foreach($products as $product)
 
-                          <tr class="gradeX warning">
-                            <td>
-                              {{ $detailer->name }}
-                            </td>
-                            <td>
-                              {{ $detailer->email }}
-                            </td>
-                            <td>
-                              {{ $detailer->phone_number }}
-                            </td>
-                            <td>
-                              <img src="{{ asset($detailer->image) }}" width="30">
-                            </td>
-                            <td>
-                              {{ $detailer->remaining_subscriptions }}
-                            </td>
-                            <td>
-                              {{ $detailer->detailer_subscriptions }}
-                            </td>
-                            <td class="hidden-phone">
-                              {{ $detailer->updated_at }}
-                            </td>
-                            <td>
-                              <a href="{{ route('detailer.edit', [$detailer->detailer_id]) }}" class="btn btn-info btn-xs update">
-                                <i class="fa fa-pencil"></i>
-                              </a>
-                              <a href="{{ route('detailer.delete',[ 'id' => $detailer->detailer_id ]) }}" class="btn btn-danger btn-xs">
+                        <tr>
+                          <td>{{ $product->title }}</td>
+                          <td>{{ $product->edition }}</td>
+                          <td>{{ $product->features }}</td>
+                          <td><img src="{{ asset($product->image) }}" width="20%"></td>
+                          <td>{{ $product->technical_data }}</td>
+                          <td>{{ $product->information }}</td>
+                          <td>{{ $product->use }}</td>
+                          <td>{{ $product->safety }}</td>
+                          <td>
+                            <a href="{{ route('products.edit',['id' => $product->id]) }}" class="btn btn-info btn-xs">
+                              <i class="fa fa-pencil"></i>
+                            </a>
+                          </td>
+                          <td>
+                            <form action="{{ route('products.destroy',['id' => $product->id]) }}" method="post" accept-charset="utf-8">
+                            
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+
+                              <button type="submit" class="btn btn-danger btn-xs">
                                 <i class="fa fa-minus-circle"></i>
-                              </a>
-                            </td>
-                          </tr>
+                              </button>
 
-                        @endforeach  
+                            </form>
+                          </td>
+                        </tr>
+
+                        @endforeach
 
                         </tbody>
                       </table>
@@ -163,47 +165,48 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add New Detailer</h4>
+        <h4 class="modal-title" id="myModalLabel">Add New Product</h4>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{ route('create') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
 
           {{ csrf_field() }}
 
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Detailer Name" required>
+            <label for="name">Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Name" required>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="Detailer Email" required>
+            <label for="name">Edition</label>
+            <input type="text" class="form-control" name="edition" placeholder="Edition" required>
           </div>
           <div class="form-group">
-            <label>Phone Number</label>
-            <input type="text" class="form-control" name="ph_no" placeholder="Phone Number" required>
+            <label for="name">Features</label>
+            <textarea name="feature" class="form-control" rows="2" placeholder="Add Features" required></textarea>
+            <p class="help-block">please separate features with comma ","</p>
           </div>
           <div class="form-group">
-            <label>Detailer Subrciption</label>
-            <input type="number" class="form-control" name="subscription" placeholder="Subscription" required>
+            <label for="name">Technical Data</label>
+            <textarea name="technical_data" class="form-control" rows="2" placeholder="Enter Technical Data" required></textarea>
+            <p class="help-block">please separate Techincal Data with comma ","</p>
           </div>
           <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="pass" placeholder="Password" required>
+            <label for="name">Information</label>
+            <textarea name="info" class="form-control" rows="2" placeholder="Enter Information" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="name">Use</label>
+            <textarea name="use" class="form-control" rows="2" placeholder="Enter use Information" required></textarea>
+
+          </div>
+          <div class="form-group">
+            <label for="name">Safety</label>
+            <textarea class="form-control" rows="3" name="safety" placeholder="Enter Safety Details" required=""></textarea>
           </div>
           <div class="form-group">
             <label>Image</label>
             <input type="file" name="file" required>
           </div>
-
-          <div class="form-group">
-            <label for="">Search</label>
-            <input type="text" class="input form-control" id="address" name="address" />
-          </div>
-
-          <div id="map-view" class="is-vcentered" style="width: 100%; height:400px;"></div>
-
-          <input type="hidden" name="lat" id="lat">
-          <input type="hidden" name="log" id="lon">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

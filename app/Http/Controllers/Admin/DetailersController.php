@@ -107,7 +107,13 @@ class DetailersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = DB::table('users')
+                                 ->join('subscriptions','subscriptions.detailer_id','=','users.id')
+                                 ->where('detailer_id',$id)->first();
+
+        // dd($edit->name);                         
+
+        return view('admin.detailers.edit')->with('edit',$edit)->with('heading' , 'detailers');                   
     }
 
     /**
@@ -119,7 +125,48 @@ class DetailersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->toArray());
+
+        $this->validate($request,[
+
+            'name'         => 'required',
+            'email'        => 'required|email',
+            'ph_no'        => 'required',
+            'subscription' => 'required',
+        ]);
+
+        $user = User::find($id);
+
+        if ($request->hasFile('file')) 
+        {
+            $image = $request->file;
+
+            $new_image = time().$image->getClientOriginalName();
+
+            $image->move('uploads/user_images',$new_image);
+
+            $user->image = 'uploads/user_images/'.$new_image;
+        }
+
+            $user->name          = $request->name;
+            $user->email         = $request->email;
+            $user->phone_number  = $request->ph_no;
+            $user->latitude      = $request->lat;
+            $user->longitude     = $request->log;
+
+            $user->save();  
+
+            
+
+        $subscription = Subscription::where('detailer_id', $id)->first();
+
+        $subscription->detailer_subscriptions  = $request->subscription;
+
+        $subscription->save();
+
+        Session::flash('success','Deatailer Updated Successfully');
+
+        return redirect()->route('detailers');
     }
 
     /**

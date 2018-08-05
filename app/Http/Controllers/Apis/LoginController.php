@@ -90,9 +90,9 @@ class LoginController extends Controller
 	    		
 	    		$user = Auth::user();
 	    		
-	    		$user->api_token = str_random(60);
+	    		// $user->api_token = str_random(60);
 
-	    		$user->save();
+	    		// $user->save();
 
 	    		$user_data = [
 				        "id"			=> $user->id,
