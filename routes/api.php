@@ -33,10 +33,10 @@ Route::post('search',[
 	'as'   => 'search'
 ]);
 
-Route::get('products',[
+Route::get('product/show',[
 
 	'uses' => 'Apis\ProductsController@index',
-	'as'   => 'products'	
+	'as'   => 'product.show'	
 ]);
 
 Route::get('product/{id}',[
@@ -44,6 +44,13 @@ Route::get('product/{id}',[
 	'uses' => 'Apis\ProductsController@product',
 	'as'   => 'product'
 ]);
+
+Route::get('/gallery-images',[
+
+	'uses' => 'Apis\ProductsController@gallery',
+	'as'   => 'gallery-images'
+]);
+
 
 Route::group(['prefix' => 'user'], function() {
    

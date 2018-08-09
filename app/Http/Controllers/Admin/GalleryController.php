@@ -41,19 +41,28 @@ class GalleryController extends Controller
         $this->validate($request,[
 
             'title'   => 'required',
-            'file'    => 'required|image',
+            'file'    => 'required',
         ]);
 
-        $image = $request->file;
+        $images = array();
 
-        $new_image = time().$image->getClientOriginalName();
+        if($files = $request->file('file'))
+        {
+            foreach($files as $file)
+            {
+                $name = time().$file->getClientOriginalName();
 
-        $image->move('uploads/gallery_images',$new_image);
+                $file->move('uploads/gallery_images',$name);
+
+                $images[] = 'uploads/gallery_images/'.$name;
+            }
+        }
+        
 
         DB::table('gallery')->insert([
 
             'title'          => $request->title,
-            'image'          => 'uploads/gallery_images/'.$new_image,
+            'image'          => implode("|",$images),
             'created_at'     => date('Y-m-d H:i:s'),
             'updated_at'     => date('Y-m-d H:i:s'),
         ]);
@@ -84,6 +93,8 @@ class GalleryController extends Controller
     {
         $gallery = DB::table('gallery')->where('id',$id)->first();
 
+        // dd($gallery);
+
         return view('admin.gallery.edit')->with('gallary', $gallery)->with('heading','gallery');
     }
 
@@ -101,23 +112,46 @@ class GalleryController extends Controller
             'title'   => 'required',
         ]);
 
-        if ($request->hasFile('file')) 
+        $images = array();
+
+        if($files = $request->file('newfile'))
         {
-            $image = $request->file;
+            foreach($files as $file)
+            {
+                $name = time().$file->getClientOriginalName();
 
-            $new_image = time().$image->getClientOriginalName();
+                $file->move('uploads/gallery_images',$name);
 
-            $image->move('uploads/gallery_images',$new_image);
-
-            $gallery = 'uploads/user_images/'.$new_image;
+                $images[] = 'uploads/gallery_images/'.$name;
+            }
         }
 
-            DB::table('gallery')->where('id',$id)->update([
+        if($old_imgs = $request->file('img'))
+        {
+            foreach($old_imgs as $old_img)
+            {
+                $img_name = time().$old_img->getClientOriginalName();
 
-                'title'          => $request->title,
-                'image'          => empty($gallery) ?  : 'uploads/gallery_images/'.$new_image,
-                'updated_at'     => date('Y-m-d H:i:s'),
-            ]);
+                $old_img->move('uploads/gallery_images',$img_name);
+
+                $images[] = 'uploads/gallery_images/'.$img_name;
+            }
+        }
+
+        if($hidden_img = $request->hidden_img)
+        {
+            foreach($hidden_img as $old)
+            {
+                $images[] = $old;
+            }
+        }
+        
+        DB::table('gallery')->where('id',$id)->update([
+
+            'title'          => $request->title,
+            'image'          => implode("|",$images),
+            'updated_at'     => date('Y-m-d H:i:s'),
+        ]);
 
 
         Session::flash('success','Image Updated Successfully to Gallery');

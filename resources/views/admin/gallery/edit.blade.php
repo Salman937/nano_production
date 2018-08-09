@@ -18,10 +18,10 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="index2.html" class="">Images Gallery</a>
+              <a href="#" class="">Images Gallery</a>
             </li>
             <li class="hidden-sm hidden-xs">
-              <a href="index2.html" class="">Edit</a>
+              <a href="#" class="">Edit</a>
             </li>
           </ul>
         </div>
@@ -78,9 +78,124 @@
             <label for="name">Title</label>
             <input type="text" class="form-control" name="title" value="{{ $gallary->title }}" placeholder="Title" required>
           </div>
+
+          <?php $update_img = explode("|",$gallary->image) ?>
+
           <div class="form-group">
-            <label>Image</label>
-            <input type="file" name="file">
+            <label for="userfile">Upload images </label>
+            <div class="col-md-12" style="">
+
+            <?php if (empty($update_img[0])): ?>
+
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="1st_img" class="">
+                    <img src="{{ asset('img/add.png') }}" id="first_img" width="100" height="100">
+                </label>
+                <input id="1st_img" name="newfile[]" type="file" class="1st_img hidden">
+            </div>
+
+        <?php else: ?>  
+
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="1st_img" class="">
+                    <img src="{{ asset($update_img[0]) }}" id="first_img" width="100" height="100">
+                </label>
+                <input id="1st_img" name="img[]" type="file" class="1st_img hidden">
+
+                <input type="hidden" value="{{ $update_img[0] }}" name="hidden_img[]">
+            </div>
+
+        <?php endif ?>
+
+        <?php if (empty($update_img[1])): ?>
+            
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="2nd_img" class="">
+                    <img src="{{ asset('img/add.png') }}" id="sec_img" width="100" height="100">
+                </label>
+                <input id="2nd_img" name="newfile[]" type="file" class="2nd_img hidden">
+            </div>
+
+        <?php else: ?>          
+
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="2nd_img" class="">
+                <img src="{{ asset($update_img[1]) }}" id="sec_img" width="100" height="100">
+                </label>
+                <input id="2nd_img" name="img[]" type="file" class="2nd_img hidden">
+
+                <input type="hidden" name="hidden_img[]" value="{{ $update_img[1] }}">
+            </div>
+
+        <?php endif ?>
+
+        <?php if (empty($update_img[2])): ?>
+            
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="3rd_img" class="">
+                    <img src="{{ asset('img/add.png') }}" id="thr_img" width="100" height="100">
+                </label>
+                <input id="3rd_img" name="newfile[]" type="file" class="3rd_img hidden">
+
+            </div>
+
+        <?php else: ?>
+        
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="3rd_img" class="">
+                    <img src="{{ asset($update_img[2]) }}" id="thr_img" width="100" height="100">
+                </label>
+                <input id="3rd_img" name="img[]" type="file" class="3rd_img hidden">
+                <input type="hidden" name="hidden_img[]" value="{{ $update_img[2] }}">
+            </div>      
+
+        <?php endif ?>
+
+        <?php if (empty($update_img[3])): ?>
+            
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="4th_img" class="">
+                    <img src="{{ asset('img/add.png') }}" id="fourth_img" width="100" height="100">
+                </label>
+                <input id="4th_img" name="newfile[]" type="file" class="4th_img hidden">
+            </div>
+
+        <?php else: ?>  
+
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="4th_img" class="">
+                    <img src="{{ asset($update_img[3]) }}" id="fourth_img" width="100" height="100">
+                </label>
+                <input id="4th_img" name="img[]" type="file" class="4th_img hidden">
+                <input type="hidden" name="hidden_img[]" value="{{ $update_img[3] }}">
+            </div>
+
+        <?php endif ?>
+
+        <?php if (empty($update_img[4])): ?>
+            
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                  <label for="5th_img" class="">
+                    <img src="{{ asset('img/add.png') }}" id="five_img" width="100" height="100">
+                  </label>
+                  <input id="5th_img" name="newfile[]" type="file" class="5th_img visible" style="display: none;">
+                </div>
+
+        <?php else: ?>  
+
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="5th_img" class="">
+                    <img src="{{ asset($update_img[4]) }}" id="five_img" width="100" height="100">
+                </label>
+                <input id="5th_img" name="img[]" type="file" class="5th_img hidden">
+                <input type="hidden" name="hidden_img[]" value="{{ $update_img[4] }}">
+            </div>
+
+        <?php endif ?>
+
+       
+
+            </div>
           </div>
       <br>
         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -101,6 +216,107 @@
       </div>
     </div>
     <!-- Main Container end -->
+
+
+<script>
+
+function readURL(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#five_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".5th_img").change(function() 
+{
+  readURL(this);
+});
+
+function first_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#first_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".1st_img").change(function() 
+{
+  first_img(this);
+});
+
+
+function second_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#sec_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".2nd_img").change(function() 
+{
+  second_img(this);
+});
+
+function thr_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#thr_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".3rd_img").change(function() 
+{
+  thr_img(this);
+});
+
+function fourth_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#fourth_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".4th_img").change(function() 
+{
+  fourth_img(this);
+});
+
+</script>
 
 
 @stop    

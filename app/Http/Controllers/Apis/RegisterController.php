@@ -26,62 +26,6 @@ class RegisterController extends Controller
     		]);
     	} 
 
-
-        $check_user = User::where('warranty_code',$request->warranty_code)->first();
-
-        if($check_user)
-        {
-            $validator = Validator::make($request->all(),[
-
-                'warranty_code'    => 'required|string|min:6|max:191',
-                'done_date'        => 'required',
-                'license_plate_no' => 'required',
-                'model'            => 'required',
-                'year'             => 'required',
-                'color'            => 'required',
-                'title'            => 'required',
-                'edition'          => 'required',
-                'detailer_id'      => 'required|integer' 
-            ]);
-
-            if ($validator->fails()) 
-            {
-                return response()->json([
-
-                    'success' => 'false',
-                    'status'  => 401,
-                    'message' => "Please Review for All Fields",
-                    'errors'  => $validator->errors()
-                ]);
-            } 
-
-            DB::table('car_details')->insert([
-
-                'customer_id'       => $check_user->id,
-                'done_date'         => date('Y-m-d',strtotime($request->done_date)),
-                'license_plate_no'  => $request->license_plate_no,
-                'model'             => $request->model,
-                'year'              => $request->year,
-                'color'             => $request->color,
-                'title'             => $request->title,
-                'edition'           => $request->edition,
-                'detailer_id'       => $request->detailer_id
-            ]);
-
-            $subscriber = Subscription::where('detailer_id',$request->detailer_id)->first();
-
-            $subscriber->remaining_subscriptions -= 1;
-
-            $subscriber->save();
-
-            return response()->json([
-                'success' => 'true',
-                'status'  => 200,
-                'message' => 'User Details Added',
-            ]);
-        }
-        else
-        {
             $validator = Validator::make($request->all(),[
 
                 'name'             => 'required|string',
@@ -137,10 +81,14 @@ class RegisterController extends Controller
             if($subscriber->remaining_subscriptions == 0)
             {
                 $subscriber->remaining_subscriptions = $subscriber->detailer_subscriptions - 1;
+
+                $subscriber->used_subscriptions = $subscriber->detailer_subscriptions - $subscriber->remaining_subscriptions;
             }
             else
             {
                 $subscriber->remaining_subscriptions -= 1;
+
+                $subscriber->used_subscriptions = $subscriber->detailer_subscriptions - $subscriber->remaining_subscriptions;
             }
 
             $subscriber->save();
@@ -151,6 +99,5 @@ class RegisterController extends Controller
                 'status'  => 200,
                 'message' => 'User Created Succssfully',
             ]);
-        }
     }
 }

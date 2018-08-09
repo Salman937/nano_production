@@ -16,7 +16,7 @@ class PersonalZoneController extends Controller
 
     	$gallery = DB::table('gallery')->orderBy('id','desc')->limit(3)->get();
 
-    	$news_feed = DB::table('news_feed')->orderBy('id','desc')->limit(5)->get();
+    	$news_feed = DB::table('news_feed')->orderBy('id','desc')->limit(15)->get();
 
         $feed = [];
 

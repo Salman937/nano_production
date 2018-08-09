@@ -18,7 +18,7 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="#" class="">Detailers</a>
+              <a href="#" class="">Customers</a>
             </li>
           </ul>
         </div>
@@ -61,17 +61,13 @@
                 <div class="widget">
                   <div class="widget-header">
                     <div class="title">
-                      <i class="fa fa-users"> </i> Detailers
+                      <i class="fa fa-users"> </i> Customers
                     </div>
                   </div>
                   <div class="widget-body">
                     <div id="dt_example" class="example_alt_pagination">
                       <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">
-
-                        <a href="" title="add new detailer" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                          <i class="fa fa-plus-circle"></i> Add New Detailer
-                        </a>
-
+                        <br>
                         <thead>
                           <tr>
                             <th style="width:17%">
@@ -80,22 +76,19 @@
                               Email
                             </th>
                             <th style="width:16%">
-                              Phone Number
+                              Warranty Code
                             </th>
                             <th style="width:16%">
-                              Image
+                              Appication Done date
                             </th>
                             <th style="width:16%">
-                              Remaining Subscriptions
+                              License Plate No
                             </th>
                             <th style="width:16%">
-                              Total Subscriptions
-                            </th>
-                            <th style="width:16%">
-                              Used Subscriptions
+                              Model
                             </th>
                             <th style="width:16%" class="hidden-phone">
-                              created_at
+                              Color
                             </th>
                             <th style="width:16%">
                               Actions
@@ -104,55 +97,45 @@
                         </thead>
                         <tbody>
 
-                        @foreach($detailers as $detailer)  
+                        @foreach($customers as $customer)  
 
                           <tr class="gradeX warning">
                             <td>
-                              {{ $detailer->name }}
+                              {{ $customer->name }}
                             </td>
                             <td>
-                              {{ $detailer->email }}
+                              {{ $customer->email }}
                             </td>
                             <td>
-                              {{ $detailer->phone_number }}
+                              {{ $customer->warranty_code }}
                             </td>
                             <td>
-                              <img src="{{ asset($detailer->image) }}" width="30">
+                              {{ $customer->done_date }}
                             </td>
                             <td>
-                              <?php if ($detailer->remaining_subscriptions == 0): ?>
-                                
-                                 {{ $detailer->detailer_subscriptions }}
-
-                              <?php else: ?>
-
-                                {{ $detailer->remaining_subscriptions }}
-
-                              <?php endif; ?>
+                              {{ $customer->license_plate_no }}
                             </td>
                             <td>
-                              {{ $detailer->detailer_subscriptions }}
+                              {{ $customer->model }}
                             </td>
                             <td>
-                              <?php if ($detailer->remaining_subscriptions == 0): ?>
-                                  0
-                              <?php else: ?>
-                                 
-                                {{ $detailer->detailer_subscriptions  - $detailer->remaining_subscriptions }}
-
-                              <?php endif; ?>
-                             
-                            </td>
-                            <td class="hidden-phone">
-                              {{ $detailer->updated_at }}
+                              {{ $customer->color }}
                             </td>
                             <td>
-                              <a href="{{ route('detailer.edit', [$detailer->detailer_id]) }}" class="btn btn-info btn-xs update">
+                              <!-- <a href="" class="btn btn-info btn-xs update">
                                 <i class="fa fa-pencil"></i>
-                              </a>
-                              <a href="{{ route('detailer.delete',[ 'id' => $detailer->detailer_id ]) }}" class="btn btn-danger btn-xs">
-                                <i class="fa fa-minus-circle"></i>
-                              </a>
+                              </a> -->
+
+                               <form action="{{ route('customers.destroy',['id' => $customer->customer_id]) }}"" method="post" accept-charset="utf-8">
+                                
+                                  {{ csrf_field() }}
+                                  {{ method_field('DELETE') }}
+
+                                    <button type="submit" class="btn btn-danger btn-xs">
+                                      <i class="fa fa-minus-circle"></i>
+                                    </button>
+
+                                </form>
                             </td>
                           </tr>
 
@@ -215,6 +198,7 @@
             <label>Image</label>
             <input type="file" name="file" required>
           </div>
+
           <div class="form-group">
             <label for="">Search</label>
             <input type="text" class="input form-control" id="address" name="address" />
@@ -258,7 +242,6 @@
  });
 
 </script>
-
 
 @stop    
 

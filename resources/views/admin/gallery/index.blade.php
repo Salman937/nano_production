@@ -18,7 +18,7 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="index2.html" class="">Images Gallery</a>
+              <a href="#" class="">Images Gallery</a>
             </li>
           </ul>
         </div>
@@ -96,7 +96,14 @@
 
                         <tr>
                           <td>{{ $gallery->title }}</td>
-                          <td><img src="{{ asset($gallery->image) }}" width="20%"></td>
+                          <td>
+                            <?php 
+
+                              $img = explode('|', $gallery->image);
+
+                             ?>
+                            <img src="{{ asset($img[0]) }}" width="20%">
+                          </td>
                           <td>{{ $gallery->created_at }}</td>
                           <td>
                             <a href="{{ route('gallery.edit',['id' => $gallery->id]) }}" class="btn btn-info btn-xs">
@@ -156,9 +163,46 @@
             <label for="name">Title</label>
             <input type="text" class="form-control" name="title" placeholder="Title" required>
           </div>
+
           <div class="form-group">
-            <label>Image</label>
-            <input type="file" name="file" required>
+            <label for="userfile">Upload images </label>
+
+            <div class="col-md-12" style="">
+
+              <div class="col-md-2 col-sm-6 col-xs-6">
+                <label for="1st_img" class="">
+                  <img src="{{ asset('img/add.png') }}" id="first_img" width="100" height="100">
+                </label>
+                <input id="1st_img" name="file[]" type="file" class="1st_img visible" style="display: none;">
+              </div>
+              <div class="col-md-2 col-sm-6 col-xs-6" style="margin-left: 10px">
+                <label for="2nd_img" class="">
+                <img src="{{ asset('img/add.png') }}" id="sec_img" width="100" height="100">
+                </label>
+                <input id="2nd_img" name="file[]" type="file" class="2nd_img visible" style="display: none;">
+
+              </div>
+              <div class="col-md-2 col-sm-6 col-xs-6" style="margin-left: 10px">
+                <label for="3rd_img" class="">
+                <img src="{{ asset('img/add.png') }}" id="thr_img" width="100" height="100">
+                </label>
+                <input id="3rd_img" name="file[]" type="file" class="3rd_img visible" style="display: none;">
+
+              </div>
+              <div class="col-md-2 col-sm-6 col-xs-6" style="margin-left: 10px">
+                <label for="4th_img" class="">
+                  <img src="{{ asset('img/add.png') }}" id="fourth_img" width="100" height="100">
+                </label>
+                <input id="4th_img" name="file[]" type="file" class="4th_img visible" style="display: none;">
+              </div>
+
+              <div class="col-md-2 col-sm-6 col-xs-6" style="margin-left: 10px">
+                <label for="5th_img" class="">
+                  <img src="{{ asset('img/add.png') }}" id="five_img" width="100" height="100">
+                </label>
+                <input id="5th_img" name="file[]" type="file" class="5th_img visible" style="display: none;">
+              </div>
+            </div>
           </div>
       </div>
       <div class="modal-footer">
@@ -169,6 +213,106 @@
     </div>
   </div>
 </div>
+
+<script>
+
+function readURL(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#five_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".5th_img").change(function() 
+{
+  readURL(this);
+});
+
+function first_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#first_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".1st_img").change(function() 
+{
+  first_img(this);
+});
+
+
+function second_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#sec_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".2nd_img").change(function() 
+{
+  second_img(this);
+});
+
+function thr_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#thr_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".3rd_img").change(function() 
+{
+  thr_img(this);
+});
+
+function fourth_img(input) 
+{
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#fourth_img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$(".4th_img").change(function() 
+{
+  fourth_img(this);
+});
+
+</script>
 
 @stop    
 

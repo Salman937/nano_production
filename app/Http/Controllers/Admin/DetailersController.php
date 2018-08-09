@@ -40,10 +40,11 @@ class DetailersController extends Controller
 
             'name'         => 'required',
             'email'        => 'required|email',
-            'ph_no'        => 'required',
+            'ph_no'        => 'required|unique:users,phone_number',
             'subscription' => 'required',
             'file'         => 'required|image',
             'pass'         => 'required',
+            'address'      => 'required',
         ]);
 
         $image = $request->file;
@@ -62,7 +63,8 @@ class DetailersController extends Controller
             'user_type'     => 'detailer',
             'latitude'      => $request->lat,
             'longitude'     => $request->log,
-            'password'      => $request->pass
+            'password'      => $request->pass,
+            'address'       => $request->address,
         ]);
 
         Subscription::create([
@@ -70,6 +72,7 @@ class DetailersController extends Controller
             'detailer_id'             => $user->id,
             'remaining_subscriptions' => 0,
             'detailer_subscriptions'  => $request->subscription,
+            'used_subscriptions'      => 0,
         ]);
 
         Session::flash('success','Deatailer Added Successfully');
@@ -153,14 +156,19 @@ class DetailersController extends Controller
             $user->phone_number  = $request->ph_no;
             $user->latitude      = $request->lat;
             $user->longitude     = $request->log;
+            $user->address     = $request->address;
 
             $user->save();  
-
             
 
         $subscription = Subscription::where('detailer_id', $id)->first();
 
-        $subscription->detailer_subscriptions  = $request->subscription;
+        $subscription->detailer_subscriptions   = $request->subscription;
+        // $subscription->remaining_subscriptions  = $request->remaing_subscription;
+        $subscription->used_subscriptions       = $request->subscription - $request->remaing_subscription;
+
+        $subscription->remaining_subscriptions  = $request->subscription - $subscription->used_subscriptions; 
+
 
         $subscription->save();
 

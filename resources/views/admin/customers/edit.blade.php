@@ -87,9 +87,6 @@
                             <div class="form-group">
                               <label>Detailer Subrciption</label>
                               <input type="number" class="form-control" name="subscription" value="{{ $edit->detailer_subscriptions }}" placeholder="Subscription" required>
-
-                              <input type="hidden" name="remaing_subscription" value="{{ $edit->remaining_subscriptions }}">
-                              <input type="hidden" name="used_subscription" value="{{ $edit->used_subscriptions }}">
                             </div>
                             <div class="form-group">
                               <label>Image</label>

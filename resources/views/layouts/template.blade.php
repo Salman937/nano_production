@@ -21,6 +21,10 @@
 
     <script src="{{ asset('js/jquery.js') }}"></script>
 
+    <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyCO78LKT42tZE-MgQUQBP-hrOvaGgxayYs&sensor=false&libraries=places'></script>
+
+    <script src="{{ asset('js/locationpicker.jquery.js') }}"></script>   
+
     <!-- HTML5 shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -113,36 +117,6 @@
         });
       });
     </script>
-
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyCO78LKT42tZE-MgQUQBP-hrOvaGgxayYs&sensor=false&libraries=places'></script>
-
-    <script src="{{ asset('js/locationpicker.jquery.js') }}"></script>    
-
-<script>
-
- $('#map-view').locationpicker({
-
-   location: {latitude: 25.7276167, longitude: -80.24209209999998},
-   enableAutocomplete: true,
-   radius:0,
-   onchanged: function (currentLocation, radius, isMarkerDropped) {
-       var addressComponents = $(this).locationpicker('map').location.addressComponents;
-       // updateControls(addressComponents);
-   },
-   oninitialized: function(component) {
-       var addressComponents = $(component).locationpicker('map').location.addressComponents;
-       // updateControls(addressComponents);
-   },
-   inputBinding: {
-       latitudeInput: $('#lat'),
-       longitudeInput: $('#lon'),
-       locationNameInput: $('#address')
-   },
-
- });
-
-</script>
-
 
   </body>
 

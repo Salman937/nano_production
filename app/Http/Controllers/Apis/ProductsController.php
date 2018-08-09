@@ -36,4 +36,17 @@ class ProductsController extends Controller
     		'product' => $product
     	]);
     }
+
+    public function gallery()
+    {
+        $gallery = DB::table('gallery')->get();
+
+        return response()->json([
+
+            'success' => 'true',
+            'status'  => '200',
+            'message' => 'Gallery Images',
+            'product' => $gallery
+        ]); 
+    }
 }

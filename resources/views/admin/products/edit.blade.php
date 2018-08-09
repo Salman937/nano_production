@@ -18,7 +18,7 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="index2.html" class="">Products</a>
+              <a href="#" class="">Products</a>
             </li>
           </ul>
         </div>

@@ -12,7 +12,6 @@
 */
 
 Route::get('/',[
-
 	'uses' => 'Auth\LoginController@showLoginForm'
 ]);
 
@@ -25,6 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::resource('gallery','Admin\GalleryController');
 	Route::resource('newsfeed','Admin\NewfeedContrller');
 	Route::resource('products','Admin\ProductsController');
+	Route::resource('customers','Admin\CustomersController');
 
 	Route::get('detailers',[
 
