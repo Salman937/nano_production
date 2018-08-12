@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->unique();
             $table->string('api_token');
             $table->string('user_type');
+            $table->string('address')->nullable();
+            $table->string('image')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('password');

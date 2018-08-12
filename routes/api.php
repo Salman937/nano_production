@@ -45,10 +45,16 @@ Route::get('product/{id}',[
 	'as'   => 'product'
 ]);
 
-Route::get('/gallery-images',[
+Route::get('/albums',[
 
 	'uses' => 'Apis\ProductsController@gallery',
-	'as'   => 'gallery-images'
+	'as'   => 'albums'
+]);
+
+Route::get('/images-gallery/{id}', [
+
+	'uses' => 'Apis\ProductsController@gallery_images',
+	'as'   => 'images-gallery'
 ]);
 
 
@@ -78,6 +84,13 @@ Route::group(['prefix' => 'user'], function() {
 
 			'uses' => 'Apis\UsersController@user_details',
 			'as'   => 'user-details'
+
+		]);
+
+		Route::post('getWarantyCode',[
+
+			'uses' => 'Apis\UsersController@get_waranty_code',
+			'as'   => 'getWarantyCode'
 
 		]);
 	});

@@ -14,8 +14,6 @@ class PersonalZoneController extends Controller
         
     	$products = DB::table('products')->orderBy('id','desc')->first();
 
-    	$gallery = DB::table('gallery')->orderBy('id','desc')->limit(3)->get();
-
     	$news_feed = DB::table('news_feed')->orderBy('id','desc')->limit(15)->get();
 
         $feed = [];
@@ -40,7 +38,6 @@ class PersonalZoneController extends Controller
     		'success' 	   => 'true',
     		'status' 	   => '200',
     		'products'     => empty($products) ? "products not avail" : $products,
-    		'gallery_img'  => empty($gallery) ? "products not avail" : $gallery,
     		'news_feed'    => empty($feed) ? "products not avail" : $feed,
     	]);
 

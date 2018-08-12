@@ -49,8 +49,23 @@ Route::group(['middleware' => 'auth'], function() {
 		'as'   => 'detailer.edit'
 	]);
 
+	Route::get('/detailer/change-password/{id}',[
+		'uses' => 'Admin\DetailersController@change_password',
+		'as'   => 'detailer.change-password'
+	]);
+
 	Route::post('/detailer/update/{id}',[
 		'uses' => 'Admin\DetailersController@update',
 		'as'   => 'detailer.update'
+	]);
+
+	Route::post('/detailer/update-password/{id}',[
+		'uses' => 'Admin\DetailersController@updatePassword',
+		'as'   => 'detailer.update-password'
+	]);
+
+	Route::post('images/upload', [
+		'uses' => 'Admin\GalleryController@images_gallery',
+		'as'   => 'images.upload'
 	]);
 });

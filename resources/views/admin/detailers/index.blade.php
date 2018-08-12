@@ -95,7 +95,7 @@
                               Used Subscriptions
                             </th>
                             <th style="width:16%" class="hidden-phone">
-                              created_at
+                              Change Password
                             </th>
                             <th style="width:16%">
                               Actions
@@ -134,17 +134,12 @@
                               {{ $detailer->detailer_subscriptions }}
                             </td>
                             <td>
-                              <?php if ($detailer->remaining_subscriptions == 0): ?>
-                                  0
-                              <?php else: ?>
-                                 
-                                {{ $detailer->detailer_subscriptions  - $detailer->remaining_subscriptions }}
-
-                              <?php endif; ?>
-                             
+                                {{ $detailer->used_subscriptions }}
                             </td>
                             <td class="hidden-phone">
-                              {{ $detailer->updated_at }}
+                              <a href="{{ route('detailer.change-password', [$detailer->detailer_id]) }}" class="btn btn-primary btn-xs">
+                                <i class="fa fa-key" aria-hidden="true"></i>
+                              </a>
                             </td>
                             <td>
                               <a href="{{ route('detailer.edit', [$detailer->detailer_id]) }}" class="btn btn-info btn-xs update">

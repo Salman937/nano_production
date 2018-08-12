@@ -71,9 +71,12 @@
                         <thead>
                           <tr>
                             <th style="width:17%">
-                              Name
+                              Customer Name
                             <th style="width:20%">
-                              Email
+                              Detailer Name
+                            </th>
+                            <th style="width:20%">
+                              Detailer Phone Number
                             </th>
                             <th style="width:16%">
                               Warranty Code
@@ -99,12 +102,17 @@
 
                         @foreach($customers as $customer)  
 
+                          @foreach($detailers as $detailer)
+
                           <tr class="gradeX warning">
                             <td>
                               {{ $customer->name }}
                             </td>
                             <td>
-                              {{ $customer->email }}
+                              {{ $detailer->name }}
+                            </td>
+                            <td>
+                              {{ $detailer->phone_number }}
                             </td>
                             <td>
                               {{ $customer->warranty_code }}
@@ -138,6 +146,8 @@
                                 </form>
                             </td>
                           </tr>
+
+                        @endforeach  
 
                         @endforeach  
 

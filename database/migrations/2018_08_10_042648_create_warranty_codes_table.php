@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubscriptionsTable extends Migration
+class CreateWarrantyCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('warranty_codes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('detailer_id');
-            $table->integer('remaining_subscriptions');
-            $table->integer('detailer_subscriptions');
-            $table->integer('used_subscriptions');
+            $table->string('car_details_id');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('warranty_codes');
     }
 }

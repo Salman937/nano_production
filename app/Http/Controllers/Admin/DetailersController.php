@@ -39,7 +39,7 @@ class DetailersController extends Controller
         $this->validate($request,[
 
             'name'         => 'required',
-            'email'        => 'required|email',
+            'email'        => 'required|unique:users,email',
             'ph_no'        => 'required|unique:users,phone_number',
             'subscription' => 'required',
             'file'         => 'required|image',
@@ -63,17 +63,27 @@ class DetailersController extends Controller
             'user_type'     => 'detailer',
             'latitude'      => $request->lat,
             'longitude'     => $request->log,
-            'password'      => $request->pass,
+            'password'      => bcrypt($request->pass),
             'address'       => $request->address,
         ]);
 
-        Subscription::create([
+        $subscriber = Subscription::create([
 
             'detailer_id'             => $user->id,
             'remaining_subscriptions' => 0,
             'detailer_subscriptions'  => $request->subscription,
             'used_subscriptions'      => 0,
         ]);
+
+        for($i=1; $i<=$request->subscription; $i++)
+        {
+            DB::table('warranty_codes')->insert([
+
+                'car_details_id'   => $subscriber->id,
+                'created_at'       => date('Y-m-d H:i:s'),
+                'status'           => 0,
+            ]);
+        }
 
         Session::flash('success','Deatailer Added Successfully');
 
@@ -134,7 +144,7 @@ class DetailersController extends Controller
 
             'name'         => 'required',
             'email'        => 'required|email',
-            'ph_no'        => 'required',
+            'ph_no'        => 'required|',
             'subscription' => 'required',
         ]);
 
@@ -156,21 +166,34 @@ class DetailersController extends Controller
             $user->phone_number  = $request->ph_no;
             $user->latitude      = $request->lat;
             $user->longitude     = $request->log;
-            $user->address     = $request->address;
+            $user->address       = $request->address;
 
             $user->save();  
             
 
         $subscription = Subscription::where('detailer_id', $id)->first();
 
-        $subscription->detailer_subscriptions   = $request->subscription;
-        // $subscription->remaining_subscriptions  = $request->remaing_subscription;
-        $subscription->used_subscriptions       = $request->subscription - $request->remaing_subscription;
+        $subscription->detailer_subscriptions    = $request->subscription;
+        $subscription->remaining_subscriptions   = $request->subscription - $request->used_subscription;
 
-        $subscription->remaining_subscriptions  = $request->subscription - $subscription->used_subscriptions; 
+        DB::table('warranty_codes')
+                                   ->where('car_details_id',$subscription->id)
+                                   ->where('status',0)
+                                   ->delete();
 
+        for($i=1; $i<=$request->subscription; $i++)
+        {
+            DB::table('warranty_codes')->insert([
+
+                'car_details_id'   => $subscription->id,
+                'status'           => 0,
+                'updated_at'       => date('Y-m-d H:i:s'),
+            ]);
+        }
 
         $subscription->save();
+
+
 
         Session::flash('success','Deatailer Updated Successfully');
 
@@ -196,5 +219,26 @@ class DetailersController extends Controller
         Session::flash('success','Detailer Deleted Successfully');
 
         return redirect()->back();
+    }
+
+    public function change_password($id)
+    {
+        $user = User::find($id);
+
+        // dd($user->toArray());
+        return view('admin.detailers.change_password')->with('password',$user)->with('heading' , 'detailers');
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->password  = bcrypt($request->change_pass);
+
+        $user->save(); 
+
+        Session::flash('success','Detailer Password Updated Successfully');
+
+        return redirect()->route('detailers');
     }
 }

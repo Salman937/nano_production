@@ -21,11 +21,19 @@ class CustomersController extends Controller
                                       ->join('car_details','car_details.customer_id','=','users.id')
                                       ->where('user_type','customer')->get();
 
+
+        foreach ($customers as $value) 
+        {
+            $get_detailers = DB::table('users')->where('id',$value->detailer_id)->get();
+        }
+
+                                                                    
         // dd($customers->toArray());
 
         return view('admin.customers.index')
                                             ->with('heading' , 'customers')
-                                            ->with('customers' , $customers);
+                                            ->with('customers' , $customers)
+                                            ->with('detailers' , $get_detailers);
     }
 
     /**

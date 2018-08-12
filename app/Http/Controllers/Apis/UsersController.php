@@ -110,6 +110,56 @@ class UsersController extends Controller
                         'message' => 'Customer ID Could Not Found',
                   ]);  
         }
-                          
+    }
+
+    public function get_waranty_code(Request $request)
+    {
+        header('Content-type:application/json');
+        
+        $user = User::find(Auth::guard('api')->id());
+
+        if (! $user) 
+        {
+            return response()->json([
+
+                'status'    => false,
+                'code'      => 401,
+                'api_token' => "User is not Registered"
+            ]);
+        }
+
+        $waranty_code = DB::table('subscriptions')
+                            ->join('warranty_codes','warranty_codes.car_details_id','=','subscriptions.id')
+                            ->where('subscriptions.detailer_id',$request->detailer_id)
+                            ->where('warranty_codes.status',0)
+                            ->first();
+
+        $codes = 
+                [
+                    'waranty_code_id' => $waranty_code->id,
+                    'detailer_id'     => $waranty_code->detailer_id,
+                    'status'          => $waranty_code->status,
+                    'warranty_code'   => 'war'.$waranty_code->id,
+                ]; 
+
+        if (!empty($waranty_code)) 
+        {
+            return response()->json([
+
+                        'success'              => 'true',
+                        'status'               => 200,
+                        'message'              => 'detailer waranty code details',
+                        'waranty_code_data'    => $codes  
+                  ]); 
+        } 
+        else 
+        {
+            return response()->json([
+
+                        'success' => 'false',
+                        'status'  => 400,
+                        'message' => "We don't found any waranty code, Please buy some more subscriptions",
+            ]);
+        }                               
     }
 }

@@ -29,8 +29,8 @@ class RegisterController extends Controller
             $validator = Validator::make($request->all(),[
 
                 'name'             => 'required|string',
-                'warranty_code'    => 'required|string|min:6|max:191|unique:users,warranty_code',
-                'phone_number'     => 'required',
+                'warranty_code'    => 'required|string|max:191|unique:users,warranty_code',
+                'phone_number'     => 'required|unique:users,phone_number',
                 'done_date'        => 'required',
                 'license_plate_no' => 'required',
                 'model'            => 'required',
@@ -38,7 +38,8 @@ class RegisterController extends Controller
                 'color'            => 'required',
                 'title'            => 'required',
                 'edition'          => 'required',
-                'detailer_id'      => 'required|integer' 
+                'detailer_id'      => 'required|integer', 
+                'waranty_code_id'  => 'required|integer' 
             ]);
 
             if ($validator->fails()) 
@@ -92,6 +93,12 @@ class RegisterController extends Controller
             }
 
             $subscriber->save();
+
+            DB::table('warranty_codes')->where('id',$request->waranty_code_id)->update([
+
+                'status'           => 1,
+                'updated_at'       => date('Y-m-d H:i:s'),
+            ]);
 
             return response()->json([
 

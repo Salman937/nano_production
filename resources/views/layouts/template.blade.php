@@ -47,13 +47,13 @@
     <!-- Header Start -->
     <header>
       <a href="index-2.html" class="logo">
-        <img src="img/logo.png" alt="Logo"/>
+        <img src="{{ asset('img/logo.png') }}" alt="Logo"/>
       </a>
       <div class="pull-right">
         <ul id="mini-nav" class="clearfix">
           <li class="list-box user-profile">
             <a id="drop7" href="#" role="button" class="dropdown-toggle user-avtar" data-toggle="dropdown">
-              <img src="img/user5.png" alt="Bluemoon User">
+              <img src="{{ asset('img/user5.png') }}" alt="Bluemoon User">
             </a>
             <ul class="dropdown-menu server-activity">
               <li>

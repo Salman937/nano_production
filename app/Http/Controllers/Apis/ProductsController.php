@@ -41,12 +41,43 @@ class ProductsController extends Controller
     {
         $gallery = DB::table('gallery')->get();
 
+        $new_gallery = [];
+
+        foreach ($gallery as $gal) 
+        {
+            $img = explode("|", $gal->gallery_images);
+            $item = $gal;
+            $item->no_of_images = count(array_filter($img)); 
+            $new_gallery[] = $item;
+        }
+
+        return response()->json([
+
+            'success' => 'true',
+            'status'  => '200',
+            'message' => 'Albums',
+            'albums'  => $new_gallery
+        ]); 
+    }
+
+    public function gallery_images($id)
+    {
+        $images = DB::table('gallery')->where('id',$id)->first();
+
+        $arr = explode("|", $images->gallery_images);
+
+        foreach ($arr as $value) 
+        {
+            
+        }
+        dd($arr);
+
         return response()->json([
 
             'success' => 'true',
             'status'  => '200',
             'message' => 'Gallery Images',
-            'product' => $gallery
+            'images'  => $arr
         ]); 
     }
 }

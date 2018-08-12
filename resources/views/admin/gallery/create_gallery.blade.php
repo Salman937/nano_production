@@ -2,10 +2,6 @@
 
 @section('content')
 
-<style type="text/css" media="screen">
-  .pac-container { z-index: 100000 !important; }
-</style>
-
     <!-- Main Container start -->
     <div class="dashboard-container">
 
@@ -18,10 +14,7 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="#" class="">Images Gallery</a>
-            </li>
-            <li class="hidden-sm hidden-xs">
-              <a href="#" class="">Edit</a>
+              <a href="#" class="">Create Gallery</a>
             </li>
           </ul>
         </div>
@@ -64,34 +57,49 @@
                 <div class="widget">
                   <div class="widget-header">
                     <div class="title">
-                      <i class="fa fa-pencil"> </i> Edit
+                      <i class="fa fa-picture-o"></i> Create Image Gallery
                     </div>
                   </div>
-                  <div class="widget-body">
-                    <div class="row">
-                      <div class="col-sm-6 col-sm-offset-1">
-                        <form method="post" action="{{ route('gallery.update',['id' => $gallary->id]) }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('images.upload') }}" enctype="multipart/form-data">
 
-          {{ csrf_field() }}
-          {{ method_field('PUT') }}
-          <div class="form-group">
-            <label for="name">Title</label>
-            <input type="text" class="form-control" name="title" value="{{ $gallary->title }}" placeholder="Title" required>
-          </div>
+                        {{ csrf_field() }}
+                        <br><br>
+                        <div class="form-group col-sm-offset-5">
+                          <label for="userfile">Browse Images</label>
+                          <input type="file" name="file[]" multiple>
+                          <input type="hidden" name="hidden_file" value="{{ $id }}">
+                        </div>
 
-          <div class="form-group">
-            <label for="userfile">Featured Image</label>
-            <input type="file" name="file">
-            <input type="hidden" name="hidden_file" value="{{ $gallary->image }}">
-          </div>
+                        <br>
+                      <button type="submit" class="btn btn-primary col-sm-offset-5">Save changes</button>
+                      <br><br>
+                    </form>
 
-          <br>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </form>
-                      </div>
+                     <?php 
+
+                        $arr = explode("|", $images->gallery_images);
+                     ?>
+
+
+              <div class="row">
+                @if(count($arr) > 0)
+
+                 <?php foreach ($arr as $value): ?>
+                   
+                    <div class="col-sm-3" style="margin-left: 3em;height: 250px">
+                      <a href="#" class="thumbnail">
+                        <img src="{{ $value }}">
+                      </a>
                     </div>
-                  </div>
+
+                 <?php endforeach ?>
+
+                @endif 
+              </div>
                 </div>
+
+
+
               </div>
             </div>
 

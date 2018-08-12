@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Session;
+use Storage;
+
 class GalleryController extends Controller
 {
     /**
@@ -27,7 +29,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -41,28 +43,20 @@ class GalleryController extends Controller
         $this->validate($request,[
 
             'title'   => 'required',
-            'file'    => 'required',
+            'file'    => 'required|image',
         ]);
 
-        $images = array();
+        $image = $request->file;
 
-        if($files = $request->file('file'))
-        {
-            foreach($files as $file)
-            {
-                $name = time().$file->getClientOriginalName();
+        $new_image = time().$image->getClientOriginalName();
 
-                $file->move('uploads/gallery_images',$name);
-
-                $images[] = 'uploads/gallery_images/'.$name;
-            }
-        }
+        $image->move('uploads/gallery_images',$new_image);
         
 
         DB::table('gallery')->insert([
 
             'title'          => $request->title,
-            'image'          => implode("|",$images),
+            'image'          => 'uploads/gallery_images/'.$new_image,
             'created_at'     => date('Y-m-d H:i:s'),
             'updated_at'     => date('Y-m-d H:i:s'),
         ]);
@@ -80,7 +74,12 @@ class GalleryController extends Controller
      */
     public function show($id)
     {
-        //
+        $gallery = DB::table('gallery')->where('id',$id)->first();
+
+
+        return view('admin.gallery.create_gallery')->with('id',$id)
+                                                   ->with('images',$gallery)
+                                                   ->with('heading','gallery');
     }
 
     /**
@@ -92,8 +91,6 @@ class GalleryController extends Controller
     public function edit($id)
     {
         $gallery = DB::table('gallery')->where('id',$id)->first();
-
-        // dd($gallery);
 
         return view('admin.gallery.edit')->with('gallary', $gallery)->with('heading','gallery');
     }
@@ -112,44 +109,21 @@ class GalleryController extends Controller
             'title'   => 'required',
         ]);
 
-        $images = array();
-
-        if($files = $request->file('newfile'))
+        if ($request->hasFile('file')) 
         {
-            foreach($files as $file)
-            {
-                $name = time().$file->getClientOriginalName();
+            $image = $request->file;
 
-                $file->move('uploads/gallery_images',$name);
+            $new_image = time().$image->getClientOriginalName();
 
-                $images[] = 'uploads/gallery_images/'.$name;
-            }
-        }
+            $image->move('uploads/gallery_images',$new_image);
 
-        if($old_imgs = $request->file('img'))
-        {
-            foreach($old_imgs as $old_img)
-            {
-                $img_name = time().$old_img->getClientOriginalName();
-
-                $old_img->move('uploads/gallery_images',$img_name);
-
-                $images[] = 'uploads/gallery_images/'.$img_name;
-            }
-        }
-
-        if($hidden_img = $request->hidden_img)
-        {
-            foreach($hidden_img as $old)
-            {
-                $images[] = $old;
-            }
+            $gallery = 'uploads/gallery_images'.$new_image;
         }
         
         DB::table('gallery')->where('id',$id)->update([
 
             'title'          => $request->title,
-            'image'          => implode("|",$images),
+            'image'          => empty($gallery) ? $request->hidden_file :'uploads/gallery_images/'.$new_image,
             'updated_at'     => date('Y-m-d H:i:s'),
         ]);
 
@@ -172,5 +146,27 @@ class GalleryController extends Controller
         Session::flash('success','Deleted');
 
         return redirect()->back();
+    }
+
+    public function images_gallery(Request $request)
+    {
+        $images = $request->file('file');
+ 
+        $imagesPath = [];    
+
+        foreach($images as $image) 
+        {
+            $path = $image->store("gallery_images", 'public_storage');
+            $imagesPath[] = asset('uploads/' . $path);
+        }
+
+        DB::table('gallery')->where('id',$request->hidden_file)->update([
+
+            'gallery_images' =>  implode('|', $imagesPath),
+        ]);    
+
+        Session::flash('success','Images Update Successfully');
+
+        return redirect()->route('gallery.index');            
     }
 }

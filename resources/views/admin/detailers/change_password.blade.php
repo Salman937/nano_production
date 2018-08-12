@@ -2,9 +2,6 @@
 
 @section('content')
 
-<style type="text/css" media="screen">
-  .pac-container { z-index: 100000 !important; }
-</style>
 
     <!-- Main Container start -->
     <div class="dashboard-container">
@@ -18,10 +15,10 @@
           <ul>
             <li><a href="#" class="heading">Home</a></li>
             <li class="hidden-sm hidden-xs">
-              <a href="#" class="">Images Gallery</a>
+              <a href="#" class="">Detailers</a>
             </li>
             <li class="hidden-sm hidden-xs">
-              <a href="#" class="">Edit</a>
+              <a href="#" class="">Change Password</a>
             </li>
           </ul>
         </div>
@@ -64,32 +61,28 @@
                 <div class="widget">
                   <div class="widget-header">
                     <div class="title">
-                      <i class="fa fa-pencil"> </i> Edit
+                      <i class="fa fa-pencil"> </i> Change Password
                     </div>
                   </div>
                   <div class="widget-body">
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-1">
-                        <form method="post" action="{{ route('gallery.update',['id' => $gallary->id]) }}" enctype="multipart/form-data">
+                    
+                        <form method="post" action="{{ route('detailer.update-password' , ['id'=> $password->id]) }}">
 
-          {{ csrf_field() }}
-          {{ method_field('PUT') }}
-          <div class="form-group">
-            <label for="name">Title</label>
-            <input type="text" class="form-control" name="title" value="{{ $gallary->title }}" placeholder="Title" required>
-          </div>
+                            {{ csrf_field() }}
 
-          <div class="form-group">
-            <label for="userfile">Featured Image</label>
-            <input type="file" name="file">
-            <input type="hidden" name="hidden_file" value="{{ $gallary->image }}">
-          </div>
+                            <div class="form-group">
+                              <label for="name">Change Password</label>
+                              <input type="text" class="form-control" name="change_pass" placeholder="Detailer Change Password" required>
+                            </div>
+                            
+                            <br>
 
-          <br>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </form>
-                      </div>
-                    </div>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+                      </div>  
+                    </div>  
                   </div>
                 </div>
               </div>
