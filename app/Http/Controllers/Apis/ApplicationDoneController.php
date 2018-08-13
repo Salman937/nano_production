@@ -28,9 +28,9 @@ class ApplicationDoneController extends Controller
 
     	$application_done = DB::table('users')
     	                        ->join('car_details','car_details.customer_id', '=' ,'users.id')
-    	                        ->where('car_details.detailer_id', $request->detailer_id)
+                                ->where('car_details.detailer_id', $request->detailer_id)
+                                ->orderBy('users.id', 'desc')
     	                        ->get();
-
 
     	$applicants = [];
 

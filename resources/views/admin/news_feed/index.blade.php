@@ -66,7 +66,7 @@
                   </div>
                   <div class="widget-body">
                     <div id="dt_example" class="example_alt_pagination">
-                      <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">
+                      <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="myTable">
 
                         <a href="" title="add new detailer" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                           <i class="fa fa-plus-circle"></i> Add News Feed 
@@ -81,6 +81,9 @@
                             </th>
                             <th style="width:16%" class="hidden-phone">
                               Image
+                            </th>
+                            <th style="width:16%" class="hidden-phone">
+                              Created at
                             </th>
                             <th style="width:16%">
                               edit
@@ -98,6 +101,7 @@
                           <td>{{ $newsfeed->name }}</td>
                           <td>{{ $newsfeed->content }}</td>
                           <td><img src="{{ asset($newsfeed->image) }}" width="20%"></td>
+                          <td>{{ $newsfeed->created_at }}</td>
                           <td>
                             <a href="{{ route('newsfeed.edit',['id' => $newsfeed->id]) }}" class="btn btn-info btn-xs">
                               <i class="fa fa-pencil"></i>

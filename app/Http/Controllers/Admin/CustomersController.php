@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\User;
 use Session;
+use App\Subscription;
 
 class CustomersController extends Controller
 {
@@ -17,23 +18,25 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $customers = DB::table('users')
-                                      ->join('car_details','car_details.customer_id','=','users.id')
-                                      ->where('user_type','customer')->get();
 
-
-        foreach ($customers as $value) 
-        {
-            $get_detailers = DB::table('users')->where('id',$value->detailer_id)->get();
-        }
-
-                                                                    
-        // dd($customers->toArray());
-
+        $new_details = DB::table('car_details')
+            ->select([
+                'car_details.*',
+                'customers.name as customer_name',
+                'customers.email as customer_email',
+                'customers.phone_number as customer_phone',
+                'customers.warranty_code as customer_warranty_code',
+                'detailers.name as detailer_name',
+                'detailers.email as detailer_email',
+                'detailers.phone_number as detailer_phone',
+            ])
+            ->join('users as detailers', 'car_details.detailer_id', '=', 'detailers.id')
+            ->join('users as customers', 'car_details.customer_id', '=', 'customers.id')
+            ->get();
+        
         return view('admin.customers.index')
-                                            ->with('heading' , 'customers')
-                                            ->with('customers' , $customers)
-                                            ->with('detailers' , $get_detailers);
+            ->with('heading' , 'customers')
+            ->with('detailers' , $new_details);
     }
 
     /**
@@ -78,7 +81,9 @@ class CustomersController extends Controller
     {
         $customers = DB::table('users')
                                       ->join('car_details','car_details.customer_id','=','users.id')
-                                      ->where('customer_id',$id)->get();
+                                      ->where('customer_id',$id)->first();
+
+        // dd($customers);
 
         return view('admin.customers.edit')
                                             ->with('heading' , 'customers')
@@ -94,7 +99,29 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->name             = $request->name;
+        $user->email            = $request->email;
+        $user->phone_number     = $request->ph_no;
+
+
+        $user->save();
+
+        $car_details = DB::table('car_details')->where('customer_id',$id)->update(
+            [
+                'license_plate_no' => $request->license_no,
+                'model'            => $request->model,
+                'year'             => $request->year,
+                'color'            => $request->color,
+                'title'            => $request->title,
+                'edition'          => $request->edition,
+            ]
+        );
+
+        Session::flash('success','Customer Updated Successfully');
+
+        return redirect()->route('customers.index');
     }
 
     /**

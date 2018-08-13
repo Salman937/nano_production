@@ -66,7 +66,7 @@
                   </div>
                   <div class="widget-body">
                     <div id="dt_example" class="example_alt_pagination">
-                      <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">
+                      <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="myTable">
 
                         <a href="" title="add new detailer" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                           <i class="fa fa-plus-circle"></i> Add New Detailer

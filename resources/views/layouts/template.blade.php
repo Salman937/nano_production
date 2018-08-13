@@ -3,7 +3,7 @@
   
 <!-- Mirrored from iamsrinu.com/bluemoon-admin-theme7/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 15 Sep 2015 06:52:42 GMT -->
 <head>
-    <title>Nano-Production</title>
+    <title>NANOPRO ADMIN PANEL</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="description" content="Blue Moon - Responsive Admin Dashboard" />
@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css') }}">
 
     <link href="{{ asset('fonts/font-awesome.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
     <script src="{{ asset('js/jquery.js') }}"></script>
 
@@ -47,7 +49,7 @@
     <!-- Header Start -->
     <header>
       <a href="index-2.html" class="logo">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo"/>
+        <h5><font color="white">NANOPRO ADMIN PANEL</font></h5>
       </a>
       <div class="pull-right">
         <ul id="mini-nav" class="clearfix">
@@ -93,7 +95,7 @@
     <script src="{{ asset('js/menu.js') }}"></script>
     <!-- <script src="{{ asset('js/custom-index2.js') }}"></script> -->
     
-    <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
+    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     
     <script type="text/javascript">
       //ScrollUp
@@ -111,11 +113,9 @@
       });
 
       //Data Tables
-      $(document).ready(function () {
-        $('#data-table').dataTable({
-          "sPaginationType": "full_numbers"
-        });
-      });
+      $('#myTable').dataTable( {
+    "pageLength": 25
+  } );
     </script>
 
   </body>

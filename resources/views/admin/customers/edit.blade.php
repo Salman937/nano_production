@@ -68,40 +68,52 @@
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-1">
                     
-                        <form method="post" action="{{ route('detailer.update' , ['id'=> $edit->detailer_id]) }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('customers.update' , ['id'=> $customer->customer_id]) }}" enctype="multipart/form-data">
 
                             {{ csrf_field() }}
+                            {{ method_field('PUT') }}
 
                             <div class="form-group">
                               <label for="name">Name</label>
-                              <input type="text" class="form-control" name="name" value="{{ $edit->name }}" placeholder="Detailer Name" required>
+                              <input type="text" class="form-control" name="name" value="{{ $customer->name }}" placeholder="Detailer Name" required>
                             </div>
                             <div class="form-group">
                               <label for="email">Email</label>
-                              <input type="email" class="form-control" name="email" value="{{ $edit->email }}" placeholder="Detailer Email" required>
+                              <input type="email" class="form-control" name="email" value="{{ $customer->email }}" placeholder="Detailer Email" required>
                             </div>
                             <div class="form-group">
                               <label>Phone Number</label>
-                              <input type="text" class="form-control" name="ph_no" value="{{ $edit->phone_number }}" placeholder="Phone Number" required>
+                              <input type="text" class="form-control" name="ph_no" value="{{ $customer->phone_number }}" placeholder="Phone Number" required>
+                            </div>
+<!--                             <div class="form-group">
+                              <label>Done Date</label>
+                              <input type="date" class="form-control" name="done_date" value="{{ $customer->done_date }}" placeholder="Subscription" required>
+                            </div> -->
+                            <div class="form-group">
+                              <label>License Plate No</label>
+                              <input type="text" class="form-control" name="license_no" value="{{ $customer->license_plate_no }}" placeholder="Subscription" required>
                             </div>
                             <div class="form-group">
-                              <label>Detailer Subrciption</label>
-                              <input type="number" class="form-control" name="subscription" value="{{ $edit->detailer_subscriptions }}" placeholder="Subscription" required>
+                              <label>Model</label>
+                              <input type="text" class="form-control" name="model" value="{{ $customer->model }}" placeholder="Subscription" required>
                             </div>
                             <div class="form-group">
-                              <label>Image</label>
-                              <input type="file" name="file">
+                              <label>Year</label>
+                              <input type="text" class="form-control" name="year" value="{{ $customer->year}}" placeholder="Subscription" required>
                             </div>
-
                             <div class="form-group">
-                              <label for="">Search</label>
-                              <input type="text" class="input form-control" id="address" name="address" />
+                              <label>Color</label>
+                              <input type="text" class="form-control" name="color" value="{{ $customer->color }}" placeholder="Subscription" required>
+                            </div>
+                            <div class="form-group">
+                              <label>Title</label>
+                              <input type="text" class="form-control" name="title" value="{{ $customer->title }}" placeholder="Subscription" required>
+                            </div>
+                            <div class="form-group">
+                              <label>Eidition</label>
+                              <input type="text" class="form-control" name="edition" value="{{ $customer->edition }}" placeholder="Subscription" required>
                             </div>
 
-                            <div id="map-view" class="is-vcentered" style="width: 100%; height:400px;"></div>
-
-                            <input type="hidden" name="lat" id="lat">
-                            <input type="hidden" name="log" id="lon">
                             <br>
                           <button type="submit" class="btn btn-primary">Save changes</button>
                         </form>
@@ -121,31 +133,6 @@
       </div>
     </div>
     <!-- Main Container end -->
-
-<script>
-
- $('#map-view').locationpicker({
-
-   location: {latitude: <?php echo $edit->latitude ?> , longitude: <?php echo $edit->longitude ?> },
-   enableAutocomplete: true,
-   radius:0,
-   onchanged: function (currentLocation, radius, isMarkerDropped) {
-       var addressComponents = $(this).locationpicker('map').location.addressComponents;
-       // updateControls(addressComponents);
-   },
-   oninitialized: function(component) {
-       var addressComponents = $(component).locationpicker('map').location.addressComponents;
-       // updateControls(addressComponents);
-   },
-   inputBinding: {
-       latitudeInput: $('#lat'),
-       longitudeInput: $('#lon'),
-       locationNameInput: $('#address')
-   },
-
- });
-
-</script>
 
 @stop    
 

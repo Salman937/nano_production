@@ -66,7 +66,7 @@
                   </div>
                   <div class="widget-body">
                     <div id="dt_example" class="example_alt_pagination">
-                      <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">
+                      <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="myTable">
                         <br>
                         <thead>
                           <tr>
@@ -94,60 +94,47 @@
                               Color
                             </th>
                             <th style="width:16%">
-                              Actions
+                              Edit
                             </th>
                           </tr>
                         </thead>
                         <tbody>
 
-                        @foreach($customers as $customer)  
-
-                          @foreach($detailers as $detailer)
+                        @foreach($detailers as $detailer)  
 
                           <tr class="gradeX warning">
                             <td>
-                              {{ $customer->name }}
+                              {{ $detailer->customer_name }}
                             </td>
                             <td>
-                              {{ $detailer->name }}
+                              {{ $detailer->detailer_name }}
                             </td>
                             <td>
-                              {{ $detailer->phone_number }}
+                              {{ $detailer->detailer_phone }}
                             </td>
                             <td>
-                              {{ $customer->warranty_code }}
+                              {{ $detailer->customer_warranty_code }}
                             </td>
                             <td>
-                              {{ $customer->done_date }}
+                              {{ $detailer->done_date }}
                             </td>
                             <td>
-                              {{ $customer->license_plate_no }}
+                              {{ $detailer->license_plate_no }}
                             </td>
                             <td>
-                              {{ $customer->model }}
+                              {{ $detailer->model }}
                             </td>
                             <td>
-                              {{ $customer->color }}
+                              {{ $detailer->color }}
                             </td>
                             <td>
-                              <!-- <a href="" class="btn btn-info btn-xs update">
-                                <i class="fa fa-pencil"></i>
-                              </a> -->
-
-                               <form action="{{ route('customers.destroy',['id' => $customer->customer_id]) }}"" method="post" accept-charset="utf-8">
-                                
-                                  {{ csrf_field() }}
-                                  {{ method_field('DELETE') }}
-
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                      <i class="fa fa-minus-circle"></i>
-                                    </button>
-
-                                </form>
+                              <a href="{{ route('customers.edit', ['id' => $detailer->customer_id]) }}">
+                                <button type="button" class="btn btn-info btn-xs">
+                                  <i class="fa fa-pencil"></i>
+                                </button>
+                              </a>
                             </td>
                           </tr>
-
-                        @endforeach  
 
                         @endforeach  
 
