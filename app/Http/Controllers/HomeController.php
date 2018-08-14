@@ -24,11 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->count();
+        $users = DB::table('users')
+                  ->where('user_type' , '=', 'detailer')
+                  ->orWhere('user_type' , '=', 'customer')
+                  ->count();
+
         $detailers = DB::table('users')
                                       ->join('subscriptions','subscriptions.detailer_id','=','users.id')
                                       ->where('user_type' , 'detailer')
                                       ->count();
+
         $customers = DB::table('users')->where('user_type' , 'customer')->count();
         $subscription = DB::table('subscriptions')->count();
         $products = DB::table('products')->count();

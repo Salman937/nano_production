@@ -76,7 +76,7 @@
                               Detailer Name
                             </th>
                             <th style="width:20%">
-                              Detailer Phone Number
+                              Customer Phone Number
                             </th>
                             <th style="width:16%">
                               Warranty Code
@@ -110,7 +110,7 @@
                               {{ $detailer->detailer_name }}
                             </td>
                             <td>
-                              {{ $detailer->detailer_phone }}
+                              {{ $detailer->customer_phone }}
                             </td>
                             <td>
                               {{ $detailer->customer_warranty_code }}

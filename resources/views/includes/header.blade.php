@@ -13,6 +13,9 @@
           Detailers
         </a>
       </li>
+      <li class=' <?= $heading == "customers"?"active":"";?> '>
+        <a href='{{ route("customers.index") }}'><i class="fa fa-users"></i>Customers</a>
+      </li>
       <li class=' <?= $heading == "gallery"?"active":"";?> '>
         <a href='{{ route("gallery.index") }}'><i class="fa fa-picture-o"></i>Gallery</a>
       </li>
@@ -21,9 +24,6 @@
       </li>
       <li class=' <?= $heading == "product"?"active":"";?> '>
         <a href='{{ route("products.index") }}'><i class="fa fa-gift"></i>Products</a>
-      </li>
-      <li class=' <?= $heading == "customers"?"active":"";?> '>
-        <a href='{{ route("customers.index") }}'><i class="fa fa-users"></i>Customers</a>
       </li>
     </ul>
   </div>
