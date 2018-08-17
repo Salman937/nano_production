@@ -35,7 +35,8 @@ class HomeController extends Controller
                                       ->count();
 
         $customers = DB::table('users')->where('user_type' , 'customer')->count();
-        $subscription = DB::table('subscriptions')->count();
+        $subscription = DB::table('subscriptions')->sum('detailer_subscriptions');
+
         $products = DB::table('products')->count();
         $news_feed = DB::table('news_feed')->count();
 
